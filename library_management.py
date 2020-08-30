@@ -10,24 +10,30 @@ class library:
     def display(self):
         print("Displaying book's \n")
         for k,v in self.lend.items():
-            print(k)
+            print(k,v)
         print("---------------\n")
 
 
     def lend_book(self, book_name):
         # book_name = input("enter book you want to lend")
-        if book_name in self.lend.keys():
+        if self.lend.get(book_name) != None:
+            print(f"you can not lend {book_name} already lended by someone")
+
+        elif book_name in self.lend.keys():
             print(f"{book_name} :book is available for lend \n")
             user_name = input("enter your name for lending book \n")
-            self.lend[book_name] = user_name
-            print(f"{book_name} has been lended by {user_name} \n")
+            if user_name.isalpha():
+                self.lend[book_name] = user_name
+                print(f"{book_name} has been lended to {user_name} \n")
+            else:
+                print("enter valid name")
         else:
             print("entered book name does not exists into out dictinary \n")
 
 
     def add_book(self, add_book_name):
         # add_book_name = input("enter the book name to be added")
-        if add_book_name in self.lend.keys():
+        if add_book_name in self.lend.keys() and add_book_name is add_book_name.isalpha():
             print(f"{add_book_name} already present in dictinray \n")
         else:
             self.lend[add_book_name] = None
