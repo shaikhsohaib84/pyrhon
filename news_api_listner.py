@@ -2,30 +2,44 @@ import json
 import requests
 from win32com.client import Dispatch
 def json_read(string):
-    req = requests.get(string)
-    req = req.json()
-    for i in range(len(req["articles"])):
-        source_name = req["articles"][i]["source"]["name"]
-        author_name = req["articles"][i]["author"]
-        title_name =  req["articles"][i]["title"]
-        description =  req["articles"][i]["description"]
-        publishedAt = req["articles"][i]["publishedAt"]
+    try:
+        req = requests.get(string)
+        req = req.json()
+        lst = []
+        for i in range(len(req["articles"])):
+            source_name = req["articles"][i]["source"]["name"]
+            author_name = req["articles"][i]["author"]
+            title_name =  req["articles"][i]["title"]
+            description =  req["articles"][i]["description"]
+            publishedAt = req["articles"][i]["publishedAt"]
+            lst = [source_name,author_name, title_name, description, publishedAt]
 
-        speak(f"{i+1} news")
-        speak("source name is ")
-        speak(source_name)
+            # print(lst)
+            for j in lst:
+                speak(j)
+        #     speak(f"{i+1} news")
+        #     speak("source name is ")
+        #     speak(source_name)
+        #
+        #     speak("author is")
+        #     speak(author_name)
+        #
+        #     speak("today's title ")
+        #     speak(title_name)
+        #
+        #     speak("description")
+        #     speak(description)
+        #
+        #     speak("date of new is")
+        #     speak(publishedAt)
+        #
+        # else:
+        #     speak("That upto today")
 
-        speak("author is")
-        speak(author_name)
 
-        speak("today's title ")
-        speak(title_name)
-
-        speak("description")
-        speak(description)
-
-        speak("date of new is")
-        speak(publishedAt)
+    except Exception as e:
+        print("Connection lost !!! try again")
+        print(e)
 
 def speak(str):
     speak = Dispatch("SAPI.SpVoice")
